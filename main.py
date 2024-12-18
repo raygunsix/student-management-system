@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
         # Help menu item
         about_action = QAction("About", self)
         help_menu_item.addAction(about_action)
+        about_action.triggered.connect(self.about)
 
         # Search menu item
         search_action = QAction(QIcon("icons/search.png"), "Search", self)
@@ -54,6 +55,10 @@ class MainWindow(QMainWindow):
 
         # Detect cell click
         self.table.cellClicked.connect(self.cell_clicked)
+
+    def about(self):
+        dialog = AboutDialog()
+        dialog.exec()  
 
     def cell_clicked(self):
         edit_button = QPushButton("Edit Record")
@@ -96,6 +101,18 @@ class MainWindow(QMainWindow):
     def search(self):
         dialog = SearchDialog()
         dialog.exec()
+
+class AboutDialog(QMessageBox):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("About")
+        self.setFixedWidth(300)
+        self.setFixedHeight(300)
+
+        content = """
+        This is a sample student information management app
+        """
+        self.setText(content)
 
 class EditDialog(QDialog):
     def __init__(self):
